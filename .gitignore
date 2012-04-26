@@ -1,6 +1,14 @@
 # Build Folders (you can keep bin if you'd like, to store dlls and pdbs)
+*.suo
+*.user
+_ReSharper.*
 bin
 obj
+/diagramas
+/packages
+!/lib
+/build
+/dist
 
 # mstest test results
 TestResults

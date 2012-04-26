@@ -1,0 +1,41 @@
+{
+	"InputFolder":"d:\\signtest\\source",
+	"OutputFolder":"d:\\signtest\\destination",
+	"Prefix":"signed_",
+	"LogFile":null,
+	"CertificateFile":"Certificate.pfx",
+	"CertificatePassword":"p@ssw0rd",
+	"Timestamp":
+	{
+		"Url" : "https://tsa.net",
+		"Username" : "",
+		"Password" : "",
+		"ProxyAddress":null,
+		"ProxyUsername":null,
+		"ProxyPassword":null
+	},
+	"Visible":true,
+	"Stamp":true,
+	"Async":true,
+	"Metadata":
+	{
+		"Title":"",
+		"Author" : "",
+		"Subject" : "",
+		"Keywords" : "",
+		"Creator" : "",
+		"Producer":""
+	},
+	"Appearance":
+	{
+		"CustomText" : "Digital signature",
+		"Reason" : "Metadata",
+		"Contact" : "Metadata",
+		"Location" : "Metadata",
+		"X" : 100,
+		"Y" : 100,
+		"Width" : 200,
+		"Height" : 100,
+		"Page" : 1
+	}
+}
