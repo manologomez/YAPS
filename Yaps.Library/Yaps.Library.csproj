@@ -32,11 +32,12 @@
     <DocumentationFile>bin\Release\Yaps.Library.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="itextsharp, Version=5.2.0.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+    <Reference Include="itextsharp">
       <HintPath>..\lib\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,8 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CertificateReader.cs" />
+    <Compile Include="IPdfSigner.cs" />
     <Compile Include="PdfSigner.cs" />
+    <Compile Include="PdfSignerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SignatureDataHandler.cs" />
+    <Compile Include="TokenSigner.cs" />
     <Compile Include="TSAClientEx.cs" />
     <Compile Include="YapsConfig.cs" />
   </ItemGroup>

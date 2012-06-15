@@ -57,6 +57,7 @@ namespace Yaps.Cmd {
 			var watch = new Stopwatch();
 			watch.Start();
 			var proc = new Controller(config);
+			proc.AllDirectories = config.AllDirectories;
 			proc.Start();
 			watch.Stop();
 			Console.WriteLine("Done in " + watch.Elapsed.TotalSeconds + " seconds, press any key to exit");

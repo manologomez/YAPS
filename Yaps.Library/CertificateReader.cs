@@ -17,7 +17,7 @@ namespace Yaps.Library {
 			//First we'll read the certificate file
 			Stream fs = new FileStream(certificado, FileMode.Open, FileAccess.Read);
 			Pkcs12Store pk12 = new Pkcs12Store(fs, (password ?? "").ToCharArray());
-
+			
 			//then Iterate throught certificate entries to find the private key entry
 			/*foreach (string al in pk12.Aliases) {
 				if (pk12.IsKeyEntry(al) && pk12.GetKey(al).Key.IsPrivate) {

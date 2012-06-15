@@ -48,6 +48,7 @@ namespace Yaps.Library {
 		public string InputFolder { get; set; }
 		public string OutputFolder { get; set; }
 		public string Prefix { get; set; }
+		public string Suffix { get; set; }
 
 		public string LogFile { get; set; }
 		public string CertificateFile { get; set; }
@@ -61,6 +62,7 @@ namespace Yaps.Library {
 		public SignatureAppearance Appearance { get; set; }
 
 		public bool Async { get; set; }
+		public bool UseSmartcard { get; set; }
 
 		public YapsConfig() {
 			Metadata = new Dictionary<string, string>();

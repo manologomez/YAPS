@@ -9,14 +9,17 @@ using iTextSharp.text.pdf;
 namespace Yaps.Library {
 	/// <summary>
 	/// Simple logic to sign PDFs using iText. Based on the "official" code available at: http://itextpdf.sourceforge.net/howtosign.html
-	/// TODO: smartcard support, further checks
+	/// TODO: further checks
 	/// </summary>
-	public class PdfSigner {
+	public class PdfSigner : IPdfSigner {
 		public YapsConfig config;
 		public CertificateReader CertReader { get; set; }
 
 		public PdfSigner(YapsConfig configuration) {
 			config = configuration;
+		}
+
+		public void Initialize() {
 			CertReader = new CertificateReader();
 			CertReader.ProcessCert(config.CertificateFile, config.CertificatePassword);
 		}
@@ -27,31 +30,19 @@ namespace Yaps.Library {
 			PdfStamper st = PdfStamper.CreateSignature(reader, fs, '\0');
 			PdfSignatureAppearance sap = st.SignatureAppearance;
 
-			var meta = config.Metadata;
+			SignatureDataHandler.SetMetadata(config, st);
+
+			/*var meta = config.Metadata;
 			if (meta != null && meta.Count > 0) {
 				//st.MoreInfo = new Hashtable(meta);
 				st.MoreInfo = meta;
 				st.XmpMetadata = config.GetStreamedMetaData();
-			}
+			}*/
 
 			//sap.SetCrypto(this.myCert.Akp, this.myCert.Chain, null, PdfSignatureAppearance.WINCER_SIGNED);
-			var appearance = config.Appearance ?? new SignatureAppearance();
 			sap.SetCrypto(null, CertReader.Chain, null, PdfSignatureAppearance.WINCER_SIGNED);
-			sap.Reason = appearance.Reason;
-			sap.Contact = appearance.Contact;
-			sap.Location = appearance.Location;
 
-			if (config.Visible && appearance.ValidateRect()) {
-				//iTextSharp.text.Rectangle rect = st.Reader.GetPageSize(sigAP.Page);
-				var xi = appearance.X + appearance.Width;
-				var yi = appearance.Y + appearance.Height;
-				var rect = new iTextSharp.text.Rectangle(appearance.X, appearance.Y, xi, yi);
-				//sap.Image = sigAP.RawData == null ? null : iTextSharp.text.Image.GetInstance(sigAP.RawData);
-				if (!string.IsNullOrEmpty(appearance.CustomText))
-					sap.Layer2Text = appearance.CustomText;
-				//sap.SetVisibleSignature(new iTextSharp.text.Rectangle(100, 100, 300, 200), 1, "Signature");
-				sap.SetVisibleSignature(rect, appearance.Page, "Signature");
-			}
+			SignatureDataHandler.SetAppearance(config, sap);
 
 			/////
 			PdfSignature dic = new PdfSignature(PdfName.ADOBE_PPKLITE, new PdfName("adbe.pkcs7.detached"));
@@ -86,7 +77,7 @@ namespace Yaps.Library {
 				String url = PdfPKCS7.GetOCSPURL(CertReader.Chain[0]);
 				if (!string.IsNullOrEmpty(url))
 					ocsp = new OcspClientBouncyCastle().GetEncoded(CertReader.Chain[0], CertReader.Chain[1], url);
-					//ocsp = new OcspClientBouncyCastle(CertReader.Chain[0], CertReader.Chain[1], url).GetEncoded();
+				//ocsp = new OcspClientBouncyCastle(CertReader.Chain[0], CertReader.Chain[1], url).GetEncoded();
 			}
 			byte[] sh = sgn.GetAuthenticatedAttributeBytes(hash, cal, ocsp);
 			sgn.Update(sh, 0, sh.Length);
@@ -124,6 +115,5 @@ namespace Yaps.Library {
 		}
 
 	}
-
 
 }

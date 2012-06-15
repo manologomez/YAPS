@@ -6,5 +6,6 @@ namespace Yaps.Cmd{
 	/// </summary>
 	public class YapsConfigExtra : YapsConfig {
 		public bool BypassSSLCheck { get; set; }
+		public bool AllDirectories { get; set; }
 	}
 }
